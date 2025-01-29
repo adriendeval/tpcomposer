@@ -1,0 +1,22 @@
+{
+    "name": "devaadr/tp-composer",
+    "description": "Petit projet pour découvrir Composer",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Devaadr\\TpComposer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Adrien DEVAL",
+            "email": "adriendeval35@gmail.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^3.8",
+        "symfony/dotenv": "^7.2",
+        "phpmailer/phpmailer": "^6.9"
+    }
+}
