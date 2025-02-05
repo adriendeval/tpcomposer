@@ -9,14 +9,14 @@ use Symfony\Component\Dotenv\Dotenv;
 
 function addFighter($l, $DATABASE_HOST, $DATABASE_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_PORT, $DATABASE_DIALECT)
 {
-
     try {
+        $l->info('Trying to connect to the database $DATABASE_NAME on $DATABASE_HOST:$DATABASE_PORT with $DATABASE_DIALECT dialect');
         $dbh = new PDO('$DATABASE_DIALECT:host=$DATABASE_HOST;dbname=test', $DATABASE_USERNAME, $DATABASE_PASSWORD);
 
         // TODO: Add a fighter to the database
 
         $l->info('Connection has been established');
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
         $l->error('Connection failed: ' . $e->getMessage());
     }
 
