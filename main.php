@@ -5,42 +5,40 @@ require 'vendor/autoload.php';
 use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Component\Dotenv\Dotenv;
+
+function addFighter($l, $DATABASE_HOST, $DATABASE_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_PORT, $DATABASE_DIALECT)
+{
+    try {
+        $l->info('Trying to connect to the database $DATABASE_NAME on $DATABASE_HOST:$DATABASE_PORT with $DATABASE_DIALECT dialect');
+        $dbh = new PDO('$DATABASE_DIALECT:host=$DATABASE_HOST;dbname=test', $DATABASE_USERNAME, $DATABASE_PASSWORD);
+
+        // TODO: Add a fighter to the database
+
+        $l->info('Connection has been established');
+    } catch (\PDOException $e) {
+        $l->error('Connection failed: ' . $e->getMessage());
+    }
+
+    $l->info('The fighter has been added to the database');
+}
+
+// Premiers pas avec les requêtes préparées
+print("Premiers pas avec les requêtes préparées\n");
 
 $log = new Logger('ApplicationSIO');
 $log->pushHandler(new StreamHandler('log/info.log', Level::Warning));
 
 $dotenv = new Dotenv();
-$dotenv->load(__DIR__.'/.env');
+$dotenv->load(__DIR__ . '/.env');
 
-$log->info('Démarrage de l\'envoi d\'un mail');
-$mail = new PHPMailer(true);
-
-try {
-    $mail = new PHPMailer(true);
-
-    $mail->isSMTP();
-    $mail->Host = 'mail.infomaniak.com';
-    $mail->SMTPAuth = true;
-    $mail->Username = $_ENV['SMTP_USERNAME'];
-    $mail->Password = $_ENV['SMTP_PASSWORD'];
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port = 465;
-    
-    $mail->isHTML(true); // Paramétrer le format de l'email en HTML
-    $mail->setFrom($_ENV['SMTP_USERNAME'], $_ENV['SMTP_USERNAME']);
-    $mail->addAddress($_ENV['SMTP_USERNAME'], $_ENV['SMTP_USERNAME']);
-    $mail->Subject = 'Ceci est un test';
-    $mail->Body    = '<br><h1 align="center">Coucou Adrien</h1><p>Comment vas-tu ?</p>';
-
-    $mail->send();
-    $log->info('Message envoyé');
-    echo 'Message envoyé !';
-} catch (Exception $e) {
-    $log->error('Envoi impossible. Erreur : ' . $mail->ErrorInfo);
-}
-
-$log->info('Fin de l\'envoi d\'un mail');
-
-?>
+// add a fighter
+addFighter(
+    $log,
+    $_ENV['DATABASE_HOST'],
+    $_ENV['DATABASE_NAME'],
+    $_ENV['DATABASE_USERNAME'],
+    $_ENV['DATABASE_PASSWORD'],
+    $_ENV['DATABASE_PORT'],
+    $_ENV['DATABASE_DIALECT']
+);
