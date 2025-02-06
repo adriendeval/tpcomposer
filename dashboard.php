@@ -10,3 +10,4 @@ echo "Bienvenue, " . $_SESSION['username'] . "!";
 ?>
 
 <p><a href="logout.php">Se déconnecter</a></p>
+<link rel="stylesheet" href="style.css">
