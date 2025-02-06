@@ -1,5 +1,9 @@
 <?php
-session_start();
+$couleur = "#FFFFFF"; // Couleur par défaut (blanc)
+
+if (isset($_COOKIE["couleur_preferee"])) {
+    $couleur = $_COOKIE["couleur_preferee"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,6 +13,7 @@ session_start();
     body {
         font-family: Arial, sans-serif;
         margin: 24px;
+        background-color: <?php echo $couleur; ?>;
     }
 </style>
 
@@ -18,14 +23,3 @@ session_start();
 </body>
 
 </html>
-
-<?php
-
-require 'vendor/autoload.php';
-
-use Monolog\Level;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Symfony\Component\Dotenv\Dotenv;
-
-print("Premiers pas avec les sessions et les cookies");
