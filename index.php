@@ -1,45 +1,19 @@
-<?php
-session_start();
-
-// Données d'exemple
-$users = [
-    'admin' => 'password123',
-    'user' => 'mypassword'
-];
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    if (isset($users[$username]) && $users[$username] === $password) {
-        $_SESSION['username'] = $username;
-        header('Location: dashboard.php');
-    } else {
-        echo "<p style='color: crimson;'>Identifiants incorrects.</p>";
-    }
-}
-?>
-
-<!DOCTYPE html>
-<html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+</head>
 <body>
 
-<h2>Connexion</h2>
+<h1>Accueil</h1>
 
-<form action="login.php" method="post">
-  <label for="username">Nom d'utilisateur :</label><br>
-  <input type="text" id="username" name="username"><br>
-  <label for="password">Mot de passe :</label><br>
-  <input type="password" id="password" name="password"><br><br>
-  <input type="submit" value="Se connecter">
-</form>
+<p>Bienvenue sur notre site !</p>
 
+<!-- Connexion -->
+ <a href="dashboard.php">Tableau de bord</a>
+ <a href="login.php">Se connecter</a>
+ <a href="logout.php">Déconnexion</a>
+    
 </body>
-
-<style>
-    * {
-        font-family: Arial, sans-serif;
-    }
-</style>
-
 </html>

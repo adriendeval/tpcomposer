@@ -19,3 +19,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Connexion</h2>
+
+<form action="login.php" method="post">
+  <label for="username">Nom d'utilisateur :</label><br>
+  <input type="text" id="username" name="username"><br>
+  <label for="password">Mot de passe :</label><br>
+  <input type="password" id="password" name="password"><br><br>
+  <input type="submit" value="Se connecter">
+</form>
+
+</body>
+</html>
