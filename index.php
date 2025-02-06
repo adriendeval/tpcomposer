@@ -1,39 +1,45 @@
 <?php
-$couleur = "#FFFFFF"; // Couleur par défaut (blanc)
+session_start();
 
+// Données d'exemple
+$users = [
+    'admin' => 'password123',
+    'user' => 'mypassword'
+];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["couleur"])) {
-    $couleur = $_POST["couleur"];
-    setcookie("couleur_preferee", $couleur, time() + 3600);
-}
-else {
-    if (isset($_COOKIE["couleur_preferee"])) {
-        $couleur = $_COOKIE["couleur_preferee"];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    if (isset($users[$username]) && $users[$username] === $password) {
+        $_SESSION['username'] = $username;
+        header('Location: dashboard.php');
+    } else {
+        echo "<p style='color: crimson;'>Identifiants incorrects.</p>";
     }
 }
-
 ?>
 
 <!DOCTYPE html>
 <html>
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 24px;
-        background-color: <?php echo $couleur; ?>;
-        color: <?php echo $couleur == "#000000" ? "#FFFFFF" : "#000000"; ?>;
-    }
-</style>
-
 <body>
-    <h1>Sessions et cookies</h1>
+
+<h2>Connexion</h2>
+
+<form action="login.php" method="post">
+  <label for="username">Nom d'utilisateur :</label><br>
+  <input type="text" id="username" name="username"><br>
+  <label for="password">Mot de passe :</label><br>
+  <input type="password" id="password" name="password"><br><br>
+  <input type="submit" value="Se connecter">
+</form>
+
 </body>
 
-<form method="post" action="index.php">
-    <label for="couleur">Choisissez votre couleur préférée :</label>
-    <input type="color" id="couleur" name="couleur" value="<?php echo $couleur; ?>">
-    <button type="submit">Valider</button>
-</form>
+<style>
+    * {
+        font-family: Arial, sans-serif;
+    }
+</style>
 
 </html>
